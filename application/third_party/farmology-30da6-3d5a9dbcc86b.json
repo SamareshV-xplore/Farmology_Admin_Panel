@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "farmology-30da6",
+  "private_key_id": "3d5a9dbcc86b6585af751efe8922a888a6e91c77",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8cR/icz3XwyDH\nw5EYPeL36+kLGbOyAvEXMVEE9nBsL/wkUfAkhbtiKLMz5/Bq0nHA3pCVilWbZh6I\nFEosjkY6fEmNABz1y3VvP3UASg6BDsJvpSSReYDkonGF5xTWHdr4A7oHPaFBjYU5\nLrCnoAzda5VX3JQhG0a7sCS/4pSIsWnOMtNy7Xn1B2N430NGpPgZgp+WRGODgFP4\nhkgQFeZRAEkgfkUosPcHo6NXnNj2y0BGUtUkNR9c0ARG+it8LfiPP/02Iq+PCVex\nDrtHItnIbdGa9/p14LgCDNgRxDWefRfxI+OsGhSimFj4+RFO2895ZDxL+f/8ynAR\nPM6mOnYlAgMBAAECggEABMBEEd0z9EpVe5PhBvUbJthffMnTb6vb+5NhETihZv44\nDjZepp0UjLStUqQIug4U6MxJEEF3nRO7C1VE9XtKJqlW4A4zrLgffYQ3up/OCST1\nHq7RjYq8XDIC82GlyIGM3BnunnDIWF3Cu8lYkjFaga6iX5+5FbNEBPFmS8w2UH1A\nNABD4HuTIN66//XyxePduAm9nNL5hBl0zE0i5naoKXUu99+2NxfqlX1B0XJkV7fz\nVm9Jj547nNUbfC/ohQrVUWFZ6s4FoAlf+c+K4xb12PdZb2slqe7jsuYFrO55nlCz\naDAEscOwbLzt4GIb9tcx+J4AxklU00vSh00SqoKc1QKBgQDc4w8XZh+R20nVIJoV\nxND6WDGUX65AcfQYTM6n8DRyt1Uh+Z1rubs72d2aTMmQXmLh9w1S686vKkmdIkd7\nWtZSg8A0NYBP2wPfo7mZfT4NSh9ucNJF+TU3U2vmCjeLiHGPMk5mmA8QGEN6VPDs\nUjTH3Om2JwuXNlRxAiJbWRNEcwKBgQDaZbjMaJv5saXR5DvfFbCFSMJ08c8MOvh+\nvg+lw5wMWIsehLaxpV9XfpHTvWDSNbjSPiHSv4h81w4TEpz9wlBqDZCF/vB/GAEh\nAMEddLRdx5xBlIwaQ+EC6O0vwFxKu1wxlmHgKlh0YxQq7CEWHwXTbZb4iva0556Q\nawo9Pi9NBwKBgBZNUqPBKuTWKEE9lnEmOxdbuj3J31UgbE3by23HYfRHMHBKvKs4\nyH/Fgotmv181OHSqNg0uQ+MJuP8FjAQXatZP+SMMV9U4Ps7gwAeQTqiW2E+VUpXA\nELByWs2SMIOFFjooESRoq/SrDn0WgHDL6ApZ8rryfEgbMzFpzsA8YSajAoGBAJlU\n6ZW5rCh2bPEbyF0roS8ykjQAwVjY3jY9wkajOx//2kym6I14iaOoHUIHp75uMUCK\nlryb9HuRkTQa0VXn4wVSWLF69+aDN+ev2+WOVkOxLSdt359hIM0mM8Be0W02ddfq\nuPTlRg0Qsswf1GrvhOuX+XKuPd9s7op+XEX7LsJpAoGBAIXVbmCjEVseUJlIZ7Cd\nVHF09au0sq/j+3jQVIGT2NXx2fwhCy7otDakl60jG96ir42r3W09rneuyDKRwOsb\ndgRJf1nNxqe4JJvbeZ79kU3jcktSwfclQ6/AswWIg071/Avv5lvePtqlEcRPHm/b\nQovkI4po9BSgUbbemSVoem2+\n-----END PRIVATE KEY-----\n",
+  "client_email": "delivery-driver-app-service-ac@farmology-30da6.iam.gserviceaccount.com",
+  "client_id": "117285338031366810557",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/delivery-driver-app-service-ac%40farmology-30da6.iam.gserviceaccount.com"
+}
