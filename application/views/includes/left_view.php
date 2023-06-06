@@ -145,6 +145,20 @@ if(!isset($sub_navigation))
             </ul>
           </li>
 
+          <li class="treeview <?php if($navigation == 'khata-management') { ?>active<?php } ?>">
+            <a href="#">
+              <i class="fa fa-circle-o text-aqua"></i> <span>Khata Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="<?=($navigation == 'khata-management' && $sub_navigation == 'users-khata-list') ? 'active' : ''?>">
+                <a href="<?=base_url('khata-management/users-khata-list')?>"><i class="fa fa-circle-o"></i> Users Khata List</a>
+              </li>
+            </ul>
+          </li>
+
           <!-- <li class="treeview <?php if($navigation == 'promo') { ?>active<?php } ?>">
               <a href="#">
                   <i class="fa fa-circle-o text-aqua"></i> <span>Promo Code Management</span>

@@ -314,3 +314,8 @@ $route["edit-subscription-plan"] = "plantix_subscription_controller/edit_existin
 // Ledger PDF Template Viewing API Routes
 // ============================================================================
 $route["ledger-pdf-template"] = "farm_management/show_ledger_pdf_template";
+
+// User Khata Management Routes
+// ============================================================================
+$route["khata-management/users-khata-list"] = "khata_management/users_khata_list_view";
+$route["khata-management/user-khata-details/(:any)"] = "khata_management/user_khata_details_view/$1";
