@@ -28,7 +28,9 @@
                                     <td>₹ <?=number_format($khata_details->total_incomes, 0)?></td>
                                     <td>₹ <?=number_format($khata_details->total_expenses, 0)?></td>
                                     <td>₹ <?=number_format($khata_details->total_profits, 0)?></td>
-                                    <td></td>
+                                    <td>
+                                        <a href="<?=base_url('khata-management/user-khata-details/'.$khata_details->id)?>" target="_blank">Show Khata Details</a>
+                                    </td>
                                 </tr>
                             <?php }} ?>
                             </tbody>
