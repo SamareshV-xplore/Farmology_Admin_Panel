@@ -65,6 +65,52 @@ class Khata_management_model extends CI_Model {
 
     public function get_user_khata_summary($user_id) {
         $user_khata_summary = new stdClass();
+        
+        $user_incomes_SQL = "SELECT CONCAT(C.first_name, ' ', C.last_name) as name,
+                                    (SELECT SUM(CS.sale_value)
+                                     FROM FM_customer_crop_sales AS CS
+                                     WHERE CS.customer_id = C.id) as total_crop_sales,
+                                    (SELECT SUM(OI.amount)
+                                     FROM FM_customer_other_incomes AS OI
+                                     WHERE OI.customer_id = C.id) as total_other_incomes
+                             FROM FM_customer AS C 
+                             WHERE C.status = 'Y' 
+                                   AND C.id = '".$user_id."'";
+        $user_income_details = $this->db->query($user_incomes_SQL)->row();
+        if (!empty($user_income_details->name)) {
+            $user_khata_summary->user_name = $user_income_details->name;
+        }        
+        if (!empty($user_income_details->total_crop_sales)) {
+            $user_khata_summary->total_crop_sales = $user_income_details->total_crop_sales;
+        }
+        if (!empty($user_income_details->total_other_incomes)) {
+            $user_khata_summary->total_other_incomes = $user_income_details->total_other_incomes;
+        }
+
+        $user_expenses_SQL_template = "SELECT SUM(E.amount) as total 
+                                       FROM FM_customer_expenses AS E 
+                                       WHERE E.expense_type = '%s'
+                                             AND E.customer_id = %d";
+
+        $user_product_expenses_SQL = sprintf($user_expenses_SQL_template, "product_related_expenses", $user_id);                               
+        $user_product_expenses = $this->db->query($user_product_expenses_SQL)->row();
+        if (!empty($user_product_expenses->total)) {
+            $user_khata_summary->total_product_expenses = $user_product_expenses->total;
+        }
+
+        $user_farming_expenses_SQL = sprintf($user_expenses_SQL_template, "farming_related_expenses", $user_id);
+        $user_farming_expenses = $this->db->query($user_farming_expenses_SQL)->row();
+        if (!empty($user_farming_expenses->total)) {
+            $user_khata_summary->total_farming_expenses = $user_farming_expenses->total;
+        }
+
+        $user_other_expenses_SQL = sprintf($user_expenses_SQL_template, "other_expenses", $user_id);
+        $user_other_expenses = $this->db->query($user_other_expenses_SQL)->row();
+        if (!empty($user_other_expenses->total)) {
+            $user_khata_summary->total_other_expenses = $user_other_expenses->total;
+        }
+        
+        return $user_khata_summary;
     }
 
 }

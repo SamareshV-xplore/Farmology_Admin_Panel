@@ -43,12 +43,15 @@ class Khata_management extends CI_Controller {
             $header_data["title"] = "Khata Management | Farmology Admin Panel";
             $left_data["navigation"] = "khata-management";
             $left_data["sub_navigation"] = "users-khata-list";
-            $page_data["user_id"] = $user_id;
+            $page_data["user_khata_summary"] = $this->khata_management_model->get_user_khata_summary($user_id);
             
             $this->load->view("includes/header_view", $header_data);
             $this->load->view("includes/left_view", $left_data);
             $this->load->view("khata_management/user_khata_details", $page_data);
             $this->load->view("includes/footer_view");
+        }
+        else {
+            redirect(base_url());
         }
     }
 
