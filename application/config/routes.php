@@ -319,3 +319,8 @@ $route["ledger-pdf-template"] = "farm_management/show_ledger_pdf_template";
 // ============================================================================
 $route["khata-management/users-khata-list"] = "khata_management/users_khata_list_view";
 $route["khata-management/user-khata-details/(:any)"] = "khata_management/user_khata_details_view/$1";
+$route["get-list-of-crop-sales/(:any)"] = "khata_management/get_list_of_crop_sales/$1";
+$route["get-list-of-other-incomes/(:any)"] = "khata_management/get_list_of_other_incomes/$1";
+$route["get-list-of-product-expenses/(:any)"] = "khata_management/get_list_of_product_expenses/$1";
+$route["get-list-of-farming-expenses/(:any)"] = "khata_management/get_list_of_farming_expenses/$1";
+$route["get-list-of-other-expenses/(:any)"] = "khata_management/get_list_of_other_expenses/$1";

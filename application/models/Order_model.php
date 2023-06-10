@@ -2,7 +2,7 @@
 
 class Order_model extends CI_Model {
 
-    function get_order_list($order_no = "" ,$filter_data)
+    function get_order_list($filter_data, $order_no = "")
     {
 
         /*"filter" => true, "search-type" => $search_type, "order-status" => $order_status, 'custom-date' => $custom_date*/
@@ -249,7 +249,7 @@ class Order_model extends CI_Model {
         return $order_no;
     }
 
-    function update_order_status($order_no = "", $status)
+    function update_order_status($status, $order_no = "")
     {
 
         if($status == "NOP" || $status == "P" || $status == "C" || $status == "D" || $status == "S")
@@ -263,7 +263,7 @@ class Order_model extends CI_Model {
         
     }
 
-    function update_order_details($order_no = "", $status, $payment_method)
+    function update_order_details($status, $payment_method, $order_no = "")
     {
 
         if($status == "NOP" || $status == "P" || $status == "C" || $status == "D" || $status == "S")

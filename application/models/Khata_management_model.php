@@ -113,4 +113,82 @@ class Khata_management_model extends CI_Model {
         return $user_khata_summary;
     }
 
+    public function get_list_of_crop_sales($user_id) {
+        $SQL = "SELECT CS.crop_sale_id as id,
+                       CONCAT('".FRONT_URL."', '', C.image) as crop_image,
+                       C.title as crop_name,
+                       CS.total_produce,
+                       CS.sale_value,
+                       CS.date,
+                       CS.reference
+                FROM FM_customer_crop_sales AS CS
+                INNER JOIN FM_crop AS C 
+                           ON C.id = CS.crop_id
+                WHERE CS.customer_id = ".$user_id."
+                ORDER BY CS.date DESC";
+        $list_of_crop_sales = $this->db->query($SQL)->result();
+        return $list_of_crop_sales;
+    }
+
+    public function get_list_of_other_incomes($user_id) {
+        $SQL = "SELECT OI.other_income_id as id,
+                       OI.income_type,
+                       OI.amount,
+                       OI.date,
+                       OI.reference
+                FROM FM_customer_other_incomes AS OI
+                WHERE OI.customer_id = ".$user_id."
+                ORDER BY OI.date DESC";
+        $list_of_other_incomes = $this->db->query($SQL)->result();
+        return $list_of_other_incomes;
+    }
+
+    
+    public function get_list_of_product_expenses($user_id) {
+        $SQL = "SELECT E.expense_id as id,
+                       EC.category_name,
+                       E.product_type,
+                       E.amount,
+                       E.date,
+                       E.reference
+                FROM FM_customer_expenses AS E
+                INNER JOIN FM_expenses_categories AS EC
+                           ON EC.category_id = E.expense_category_id
+                WHERE E.customer_id = ".$user_id."
+                      AND E.expense_type = 'product_related_expenses'
+                ORDER BY E.date DESC";
+        $list_of_product_expenses = $this->db->query($SQL)->result();
+        return $list_of_product_expenses;
+    }
+
+    public function get_list_of_farming_expenses($user_id) {
+        $SQL = "SELECT E.expense_id as id,
+                       EC.category_name,
+                       E.amount,
+                       E.date,
+                       E.reference
+                FROM FM_customer_expenses AS E
+                INNER JOIN FM_expenses_categories AS EC
+                           ON EC.category_id = E.expense_category_id
+                WHERE E.customer_id = ".$user_id."
+                      AND E.expense_type = 'farming_related_expenses'
+                ORDER BY E.date DESC";
+        $list_of_farming_expenses = $this->db->query($SQL)->result();
+        return $list_of_farming_expenses;
+    }
+    
+    public function get_list_of_other_expenses($user_id) {
+        $SQL = "SELECT E.expense_id as id,
+                       E.expense_name,
+                       E.amount,
+                       E.date,
+                       E.reference
+                FROM FM_customer_expenses AS E
+                WHERE E.customer_id = ".$user_id."
+                      AND E.expense_type = 'other_expenses'
+                ORDER BY E.date DESC";
+        $list_of_other_expenses = $this->db->query($SQL)->result();
+        return $list_of_other_expenses;
+    }
+
 }

@@ -102,7 +102,8 @@ class Order extends CI_Controller {
         $page_data['export_flag'] = $export_flag;
 
         // get order list
-        $order_list = $this->order_model->get_order_list("",$filter_data);
+        $order_no = "";
+        $order_list = $this->order_model->get_order_list($filter_data, $order_no);
         $page_data['order_list'] = $order_list;
         
         $this->load->view('includes/header_view', $header_data);
@@ -120,7 +121,8 @@ class Order extends CI_Controller {
             $order_status = $_REQUEST['status'];
             $filter_data = array("filter" => true, "search-type" => 'manual-date', "order-status" => $order_status, 'custom-date' => $date_range);
 
-            $order_list = $this->order_model->get_order_list("",$filter_data);
+            $order_no = "";
+            $order_list = $this->order_model->get_order_list($filter_data, $order_no);
 
             /*echo "<pre>";
             print_r($order_list);
@@ -310,7 +312,7 @@ class Order extends CI_Controller {
         $status = $this->input->post('status');
 
         $order_no = $this->order_model->get_order_no_by_order_id($id);
-        $update_status = $this->order_model->update_order_status($order_no, $status); 
+        $update_status = $this->order_model->update_order_status($status, $order_no); 
         // call notification
         $this->notification_model->send_notification($order_no);
         //----------------------------------------------      
@@ -337,7 +339,7 @@ class Order extends CI_Controller {
         $payment_method = $this->input->post('payment_method');
 
         $order_no = $this->order_model->get_order_no_by_order_id($id);
-        $update_status = $this->order_model->update_order_details($order_no, $status, $payment_method); 
+        $update_status = $this->order_model->update_order_details($status, $payment_method, $order_no); 
         // call notification
         $this->notification_model->send_notification($order_no);
         //----------------------------------------------      
