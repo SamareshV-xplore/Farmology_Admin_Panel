@@ -324,3 +324,5 @@ $route["get-list-of-other-incomes/(:any)"] = "khata_management/get_list_of_other
 $route["get-list-of-product-expenses/(:any)"] = "khata_management/get_list_of_product_expenses/$1";
 $route["get-list-of-farming-expenses/(:any)"] = "khata_management/get_list_of_farming_expenses/$1";
 $route["get-list-of-other-expenses/(:any)"] = "khata_management/get_list_of_other_expenses/$1";
+$route["get-filtered-khata-details/(:any)"] = "khata_management/get_filtered_khata_details/$1";
+$route["download-user-khata-details/(:any)"] = "khata_management/get_filtered_khata_details_PDF/$1";

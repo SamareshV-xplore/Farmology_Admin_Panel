@@ -43,6 +43,7 @@ else
 
     define('ASSETS_URL', 'https://admin.surobhiagro.in/assets/');
     define('FILE_UPLOAD_BASE_PATH', '/home1/farmolog/public_html/admin-surobhiagro-in/media/');
+    define('ADMIN_THIRD_PARTY_PATH', '/home1/farmolog/public_html/admin-surobhiagro-in/application/third_party');
     define('FRONT_URL', 'https://admin.surobhiagro.in/media/');
     $config['base_url'] = 'https://admin.surobhiagro.in/';
     define('FROM_EMAIL', 'company@surobhiagro.in');

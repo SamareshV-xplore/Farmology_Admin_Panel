@@ -2,7 +2,7 @@
 
     .khata-summary-table {
         width: 100%;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
     }
     
     .khata-summary-table td {
@@ -35,6 +35,36 @@
         background: rgba(220, 53, 69, 0.8);
     }
 
+    .list-filtering-controls-table {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .list-filtering-controls-table tr {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+    }
+
+    .list-filtering-controls-table td {
+        padding-right: 10px;
+    }
+
+    .list-filtering-input-controls {
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+    }
+
+    .list-filtering-input-controls input, select {
+        height: 25px;
+    }
+
+    #filter_list_button {
+        width: 79.64px;
+        height: 34px;
+    }
+
     .table-header {
         margin: 0px;
         font-size: 20px;
@@ -65,6 +95,18 @@
 
     .mb-3 {
         margin-bottom: 20px;
+    }
+
+    #empty_list_message_container {
+        height: 400px;
+        display: grid;
+        place-items: center;
+    }
+
+    #empty_list_message {
+        font-size: 20px;
+        font-weight: 600;
+        color: #CCC;
     }
 
 </style>
@@ -129,10 +171,48 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="box">
+            <div class="box-body">
+                <table class="list-filtering-controls-table">
+                    <tbody>
+                        <tr>
+                            <td class="list-filtering-input-controls">
+                                <label for="endDate">Start Date: </label>
+                                <input type="date" id="startDate" name="startDate">
+                            </td>
+                            <td class="list-filtering-input-controls">
+                                <label for="endDate">End Date: </label>
+                                <input type="date" id="endDate" name="endDate">
+                            </td>
+                            <td class="list-filtering-input-controls">
+                                <label for="cropList">Select Crop: </label>
+                                <select id="cropList" name="cropList">
+                                    <option value=""></option>
+                                    <?php if (!empty($crops_list)) {
+                                    foreach ($crops_list as $i => $crop_details) { ?>
+                                        <option value="<?=$crop_details->id?>"><?=$crop_details->name?></option>
+                                    <?php }} ?>
+                                </select>
+                            </td>
+                            <td>
+                               <button type="button" id="filter_list_button" class="btn btn-success" onclick="filter_khata_details()">Filter List</button>
+                            </td>
+                            <td>
+                                <button type="button" id="download_filtered_list_button" class="btn btn-primary" onclick="download_khata_details()">Download PDF</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     <?php } ?>
 
     <div class="row">
-        <div class="col-md-12">
+        <div id="empty_list_message_container" class="col-md-12" style="display:none;">
+            <span id="empty_list_message">No Khata Details Found</span>
+        </div>
+        <div id="crop_sales_listing_table_container" class="col-md-12">
             <div class="box box-success">
                 <h3 class="table-header box-header with-border">
                     List of Crop Sales
@@ -156,7 +236,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div id="other_incomes_listing_table_container" class="col-md-12">
             <div class="box box-success">
                 <h3 class="table-header box-header with-border">
                     List of Other Incomes
@@ -179,7 +259,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div id="product_expenses_listing_table_container" class="col-md-12">
             <div class="box box-danger">
                 <h3 class="table-header box-header with-border">
                     List of Product Expenses
@@ -203,7 +283,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div id="farming_expenses_listing_table_container" class="col-md-12">
             <div class="box box-danger">
                 <h3 class="table-header box-header with-border">
                     List of Farming Expenses
@@ -226,7 +306,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div id="other_expenses_listing_table_container" class="col-md-12">
             <div class="box box-danger">
                 <h3 class="table-header box-header with-border">
                     List of Other Expenses
@@ -255,6 +335,11 @@
 
 <script>
 
+    var loader = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: none; display: block; shape-rendering: auto;" width="20px" height="20px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <circle cx="50" cy="50" fill="none" stroke="#ffffff" stroke-width="15" r="35" stroke-dasharray="164.93361431346415 56.97787143782138">
+        <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+        </circle>
+    </svg>`;
     var user_id = `<?=$user_id?>`;
     var crop_sales_listing_table = null;
     var other_incomes_listing_table = null;
@@ -326,18 +411,25 @@
     }
 
     function render_list_of_crop_sales(data) {
-        data.forEach((details, i) => {
-            let crop = `<div class="crop-details-container">
-                <img src="${details.crop_image}" alt="Crop Image ${i+1}" class="crop-image">
-                <span class="crop-name">${details.crop_name}</span>
-            </div>`;
-            let total_produce = details.total_produce;
-            let sale_value = details.sale_value;
-            let date = details.date;
-            let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
-
-            crop_sales_listing_table.row.add([i+1, crop, total_produce, sale_value, date, reference]).draw(false);
-        });
+        crop_sales_listing_table.clear().draw();
+        if (data.length > 0) {
+            $("#crop_sales_listing_table_container").show();
+            data.forEach((details, i) => {
+                let crop = `<div class="crop-details-container">
+                    <img src="${details.crop_image}" alt="Crop Image ${i+1}" class="crop-image">
+                    <span class="crop-name">${details.crop_name}</span>
+                </div>`;
+                let total_produce = details.total_produce;
+                let sale_value = details.sale_value;
+                let date = details.date;
+                let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
+    
+                crop_sales_listing_table.row.add([i+1, crop, total_produce, sale_value, date, reference]).draw(false);
+            });
+        }
+        else {
+            $("#crop_sales_listing_table_container").hide();
+        }
     }
 
     function get_list_of_other_incomes() {
@@ -366,10 +458,17 @@
     }
 
     function render_list_of_other_incomes(data) {
-        data.forEach((details, i) => {
-            let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
-            other_incomes_listing_table.row.add([i+1, details.income_type, details.amount, details.date, reference]).draw(false);
-        });
+        other_incomes_listing_table.clear().draw();
+        if (data.length > 0) {
+            $("#other_incomes_listing_table_container").show();
+            data.forEach((details, i) => {
+                let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
+                other_incomes_listing_table.row.add([i+1, details.income_type, details.amount, details.date, reference]).draw(false);
+            });
+        }
+        else {
+            $("#other_incomes_listing_table_container").hide();
+        }
     }
 
     function get_list_of_product_expenses() {
@@ -398,10 +497,17 @@
     }
 
     function render_list_of_product_expenses(data) {
-        data.forEach((details, i) => {
-            let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
-            product_expenses_listing_table.row.add([i+1, details.category_name, details.product_type, details.amount, details.date, reference]).draw(false);
-        });
+        product_expenses_listing_table.clear().draw();
+        if (data.length > 0) {
+            $("#product_expenses_listing_table_container").show();
+            data.forEach((details, i) => {
+                let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
+                product_expenses_listing_table.row.add([i+1, details.category_name, details.product_type, details.amount, details.date, reference]).draw(false);
+            });
+        }
+        else {
+            $("#product_expenses_listing_table_container").hide();
+        }
     }
     
     function get_list_of_farming_expenses() {
@@ -430,10 +536,17 @@
     }
 
     function render_list_of_farming_expenses(data) {
-        data.forEach((details, i) => {
-            let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
-            farming_expenses_listing_table.row.add([i+1, details.category_name, details.amount, details.date, reference]).draw(false);
-        });
+        farming_expenses_listing_table.clear().draw();
+        if (data.length > 0) {
+            $("#farming_expenses_listing_table_container").show();
+            data.forEach((details, i) => {
+                let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
+                farming_expenses_listing_table.row.add([i+1, details.category_name, details.amount, details.date, reference]).draw(false);
+            });
+        }
+        else {
+            $("#farming_expenses_listing_table_container").hide();
+        }
     }
     
     function get_list_of_other_expenses() {
@@ -462,10 +575,104 @@
     }
 
     function render_list_of_other_expenses(data) {
-        data.forEach((details, i) => {
-            let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
-            other_expenses_listing_table.row.add([i+1, details.expense_name, details.amount, details.date, reference]).draw(false);
+        other_expenses_listing_table.clear().draw();
+        if (data.length > 0) {
+            $("#other_expenses_listing_table_container").show();
+            data.forEach((details, i) => {
+                let reference = (details.hasOwnProperty("reference") && details.reference != null) ? details.reference : "<span class='not-available'>N/A</span>";
+                other_expenses_listing_table.row.add([i+1, details.expense_name, details.amount, details.date, reference]).draw(false);
+            });
+        }
+        else {
+            $("#other_expenses_listing_table_container").hide();
+        }
+    }
+
+    function filter_khata_details() {
+        let startDate = $("#startDate").val();
+        let endDate = $("#endDate").val();
+        let selectedCropId = $("#cropList").val();
+        let postData = {
+            start_date: startDate,
+            end_date: endDate,
+            selected_crop_id: selectedCropId
+        };
+        let filter_list_button = $("#filter_list_button");
+
+        $.ajax({
+            url: "<?=base_url('get-filtered-khata-details')?>/"+user_id,
+            type: "POST",
+            data: postData,
+            beforeSend: function() {
+                filter_list_button.attr("disabled", "disabled");
+                filter_list_button.html(loader);
+            },
+            complete: function() {
+                filter_list_button.html("Filter List");
+                filter_list_button.removeAttr("disabled");
+            },
+            error: function(a, b, c) {
+                toast("Something went wrong! Failed to get filtered khata details.", 3000);
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            },
+            success: function(response) {
+                if (response.success == true) {
+                    render_filtered_khata_details(response.data);
+                }
+                else if (response.success == false) {
+                    toast(response.message, 3000);
+                }
+                else {
+                    toast("Something went wrong! Failed to get filtered khata details.", 3000);
+                    console.log(response);
+                }
+            }
         });
+    }
+
+    function render_filtered_khata_details(data) {
+        render_list_of_crop_sales(data.filtered_crop_sales_list);
+        render_list_of_other_incomes(data.filtered_other_incomes_list);
+        render_list_of_product_expenses(data.filtered_product_expenses_list);
+        render_list_of_farming_expenses(data.filtered_farming_expenses_list);
+        render_list_of_other_expenses(data.filtered_other_expenses_list);
+
+        if (data.filtered_crop_sales_list.length == 0
+            && data.filtered_other_incomes_list.length == 0
+            && data.filtered_product_expenses_list.length == 0
+            && data.filtered_farming_expenses_list.length == 0
+            && data.filtered_other_expenses_list.length == 0) {
+                $("#empty_list_message_container").show();
+        }
+        else {
+            $("#empty_list_message_container").hide();
+        }
+    }
+
+    function download_khata_details() {
+        let startDate = $("#startDate").val();
+        let endDate = $("#endDate").val();
+        let cropId = $("#cropList").val();
+
+        let queryString = [];
+        if (startDate != "") {
+            queryString.push("start_date="+startDate);
+        }
+        if(endDate != "") {
+            queryString.push("end_date="+endDate);
+        }
+        if(cropId != "") {
+            queryString.push("crop_id="+cropId);
+        }
+        if (queryString.length > 0) {
+            queryString = "?"+queryString.join("&&");
+        }
+
+        let URL = "<?=base_url('download-user-khata-details')?>/"+user_id+queryString;
+        window.open(URL, "_blank");
+        
     }
 
 </script>

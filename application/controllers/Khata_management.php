@@ -44,6 +44,7 @@ class Khata_management extends CI_Controller {
             $left_data["navigation"] = "khata-management";
             $left_data["sub_navigation"] = "users-khata-list";
             $page_data["user_id"] = $user_id;
+            $page_data["crops_list"] = $this->khata_management_model->get_list_of_crops();
             $page_data["user_khata_summary"] = $this->khata_management_model->get_user_khata_summary($user_id);
             
             $this->load->view("includes/header_view", $header_data);
@@ -119,6 +120,44 @@ class Khata_management extends CI_Controller {
         }
         $response = ["success" => true, "message" => "List of other expenses get successfully.", "data" => $list_of_other_expenses];
         $this->response($response, 200);
+    }
+
+    public function get_filtered_khata_details($user_id) {
+        $start_date = (!empty($_POST["start_date"])) ? $_POST["start_date"] : NULL;
+        $end_date = (!empty($_POST["end_date"])) ? $_POST["end_date"] : NULL;
+        $selected_crop_id = (!empty($_POST["selected_crop_id"])) ? $_POST["selected_crop_id"] : NULL;
+
+        $data["filtered_crop_sales_list"] = $this->khata_management_model->get_list_of_crop_sales($user_id, $start_date, $end_date, $selected_crop_id);
+        $data["filtered_other_incomes_list"] = $this->khata_management_model->get_list_of_other_incomes($user_id, $start_date, $end_date);
+        $data["filtered_product_expenses_list"] = $this->khata_management_model->get_list_of_product_expenses($user_id, $start_date, $end_date);
+        $data["filtered_farming_expenses_list"] = $this->khata_management_model->get_list_of_farming_expenses($user_id, $start_date, $end_date);
+        $data["filtered_other_expenses_list"] = $this->khata_management_model->get_list_of_other_expenses($user_id, $start_date, $end_date);
+
+        $response = ["success" => true, "message" => "Filtered khata details get successfully.", "data" => $data];
+        $this->response($response, 200);
+    }
+
+    public function get_filtered_khata_details_PDF($user_id) {
+        $start_date = (!empty($_GET["start_date"])) ? $_GET["start_date"] : NULL;
+        $end_date = (!empty($_GET["end_date"])) ? $_GET["end_date"] : NULL;
+        $crop_id = (!empty($_GET["crop_id"])) ? $_GET["crop_id"] : NULL;
+
+        $data["customer_name"] = $this->khata_management_model->get_customer_name($user_id);
+        $data["date_range"] = $this->khata_management_model->get_date_range_for_ledger_details($user_id, $start_date, $end_date);
+        $data["crop_sales"] = $this->khata_management_model->get_list_of_crop_sales($user_id, $start_date, $end_date, $crop_id);
+        $data["other_incomes"] = $this->khata_management_model->get_list_of_other_incomes($user_id, $start_date, $end_date);
+        $data["product_related_expenses"] = $this->khata_management_model->get_list_of_product_expenses($user_id, $start_date, $end_date);
+        $data["farming_related_expenses"] = $this->khata_management_model->get_list_of_farming_expenses($user_id, $start_date, $end_date);
+        $data["other_expenses"] = $this->khata_management_model->get_list_of_other_expenses($user_id, $start_date, $end_date);
+        
+        if (!empty($data["crop_sales"]) || !empty($data["other_incomes"]) || !empty($data["product_related_expenses"]) || !empty($data["farming_related_expenses"]) || !empty($data["other_expenses"])) {
+            $html = $this->load->view('pdf-template/ledger', $data, true);
+            include_once(ADMIN_THIRD_PARTY_PATH.'/mpdf/vendor/autoload.php');
+            $pdf = new \Mpdf\Mpdf();
+            $pdf->AddPage();
+            $pdf->WriteHTML($html);
+            return $pdf->Output();
+        }
     }
 
 }
