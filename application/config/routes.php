@@ -224,9 +224,9 @@ $route['question-edit/(:any)'] = 'questions/edit/$1';
 $route['question-delete/(:any)'] = 'questions/delete/$1';
 $route['get_recommended_product/(:any)'] = 'questions/get_recommended_product/$1';
 
-$route['sellproduces-list'] = 'sellproduces';
-$route['sellproduces-details/(:any)'] = 'sellproduces/details/$1';
-$route["delete_sell_produce/(:any)"] = "sellproduces/delete/$1";
+// $route['sellproduces-list'] = 'sellproduces';
+// $route['sellproduces-details/(:any)'] = 'sellproduces/details/$1';
+// $route["delete_sell_produce/(:any)"] = "sellproduces/delete/$1";
 
 $route['communities-list'] = 'Community';
 $route['communities-details/(:any)'] = 'community/details/$1';

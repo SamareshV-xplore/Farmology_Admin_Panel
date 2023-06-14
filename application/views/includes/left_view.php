@@ -119,6 +119,12 @@ if(!isset($sub_navigation))
               </a>
           </li>
 
+          <li class="<?php if($navigation == 'referrals') { ?>active<?php } ?>">
+              <a href="<?php echo base_url('referrals'); ?>">
+                  <i class="fa fa-circle-o text-aqua"></i> <span>Users Referrals Data</span>
+              </a>
+          </li>
+
           <li class="<?php if($navigation == 'vendors') { ?>active<?php } ?>">
               <a href="<?php echo base_url('vendors-list'); ?>">
                   <i class="fa fa-circle-o text-aqua"></i> <span>Vendor Management</span>
@@ -217,22 +223,22 @@ if(!isset($sub_navigation))
               </ul>
           </li>
 
-          <li class="treeview <?php if($navigation == 'delivery_drivers') { ?>active<?php } ?>">
+          <li class="treeview <?php if($navigation == 'delivery_drivers' || $navigation == 'delivery_date_management') { ?>active<?php } ?>">
             <a href="#">
-              <i class="fa fa-circle-o text-aqua"></i> <span>Delivery Drivers Management</span>
+              <i class="fa fa-circle-o text-aqua"></i> <span>Delivery Management</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="<?php if($navigation == 'delivery_drivers' && $sub_navigation == 'delivery_drivers_list') { ?>active<?php } ?>"><a href="<?=base_url('delivery-drivers-list')?>"><i class="fa fa-circle-o"></i> Delivery Drivers List</a></li>
+              <li class="<?php if($navigation == 'delivery_drivers' && $sub_navigation == 'delivery_drivers_list') { ?>active<?php } ?>"><a href="<?=base_url('delivery-drivers-list')?>"><i class="fa fa-circle-o"></i> Delivery Drivers</a></li>
               <li class="<?php if($navigation == 'delivery_drivers' && $sub_navigation == 'add_delivery_driver') { ?>active<?php } ?>"><a href="<?=base_url('add-delivery-driver')?>"><i class="fa fa-circle-o"></i> Add Delivery Driver</a></li>
+              <li class="<?php if($navigation == 'delivery_date_management') { ?>active<?php } ?>"><a href="<?=base_url('delivery-date-management')?>"><i class="fa fa-circle-o"></i> Delivery Dates</a></li>
             </ul>
           </li>
 
-          <li class="<?=($navigation == 'delivery_date_management') ? "active" : ""?>"><a href="<?=base_url('delivery-date-management')?>"><i class="fa fa-circle-o"></i> Delivery Date Management</a></li>
 
-          <li class="treeview <?php if($navigation == 'blog') { ?>active<?php } ?>">
+          <li class="treeview <?php if($navigation == 'blog' || $navigation == 'blogcat') { ?>active<?php } ?>">
               <a href="#">
                   <i class="fa fa-circle-o text-aqua"></i> <span>Blog Management</span>
                   <span class="pull-right-container">
@@ -242,27 +248,15 @@ if(!isset($sub_navigation))
               <ul class="treeview-menu">
                   <li class="<?php if($navigation == 'blog' && $sub_navigation == 'blog-list') { ?>active<?php } ?>"><a href="<?php echo base_url();?>blog"><i class="fa fa-circle-o"></i> Blog List</a></li>
                   <li class="<?php if($navigation == 'blog' && $sub_navigation == 'blog-add') { ?>active<?php } ?>"><a href="<?php echo base_url();?>blog/add"><i class="fa fa-circle-o"></i> Add New Blog</a></li>
-              </ul>
-
-          </li>
-
-          <li class="treeview <?php if($navigation == 'blogcat') { ?>active<?php } ?>">
-              <a href="#">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Blog  Category Management</span>
-                  <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-              </a>
-              <ul class="treeview-menu">
                   <li class="<?php if($navigation == 'blogcat' && $sub_navigation == 'blog-cat-list') { ?>active<?php } ?>"><a href="<?php echo base_url();?>blog/category"><i class="fa fa-circle-o"></i> Blog Category List</a></li>
                   <li class="<?php if($navigation == 'blogcat' && $sub_navigation == 'blog-cat-add') { ?>active<?php } ?>"><a href="<?php echo base_url();?>blog/category_add"><i class="fa fa-circle-o"></i> Add New Blog Category</a></li>
               </ul>
-
           </li>
+
 
           <li class="treeview <?php if($navigation == 'video') { ?>active<?php } ?>">
           <a href="#">
-            <i class="fa fa-circle-o text-aqua"></i> <span>Youtube Video Management</span>
+            <i class="fa fa-circle-o text-aqua"></i> <span>Video Management</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -273,107 +267,134 @@ if(!isset($sub_navigation))
           </ul>
         </li>
 
-        <li class="treeview <?php if($navigation == 'questions') { ?>active<?php } ?>">
+        <li class="treeview <?php if($navigation == 'questions' || $navigation == 'communities') { ?>active<?php } ?>">
             <a href="#">
-                <i class="fa fa-circle-o text-aqua"></i> <span>Questions & Answers Management</span>
+                <i class="fa fa-circle-o text-aqua"></i> <span>Q&A Management</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-              <li class="<?php if($navigation == 'questions' && $sub_navigation == 'questions-list') { ?>active<?php } ?>"><a href="<?php echo base_url('questions-list');?>"><i class="fa fa-circle-o"></i> Questions List</a></li>
+              <li class="<?php if($navigation == 'communities') { ?>active<?php } ?>">
+                  <a href="<?php echo base_url('communities-list'); ?>">
+                      <i class="fa fa-circle-o text-aqua"></i> <span>Asked Community Questions</span>
+                  </a>
+              </li>
+              <li class="<?php if($navigation == 'questions' && $sub_navigation == 'questions-list') { ?>active<?php } ?>"><a href="<?php echo base_url('questions-list');?>"><i class="fa fa-circle-o"></i> Asked Expert Questions</a></li>
             <li class="<?php if($navigation == 'questions' && $sub_navigation == 'questions-add') { ?>active<?php } ?>"><a href="<?php echo base_url('questions/add');?>"><i class="fa fa-circle-o"></i>Add Question</a></li>
             </ul>
         </li>
+        
+        <li class="treeview <?php if($navigation == 'push' || $navigation == 'schedule-push-notification') { ?>active<?php } ?>">
+          <a href="#">
+              <i class="fa fa-circle-o text-aqua"></i> <span>Notification Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if($navigation == 'push') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('push-notification'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Send Push Notification</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'schedule-push-notification') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('schedule-push-notification/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Schedule Push Notification</span>
+                </a>
+            </li>
+          </ul>
+        </li>
 
-          <li class="<?php if($navigation == 'sellproduces') { ?>active<?php } ?>">
+        <li class="treeview <?php if($navigation == 'merchants' || $navigation == 'merchants_commision' || $navigation == 'merchant_earned_commissions') { ?>active<?php } ?>">
+          <a href="#">
+              <i class="fa fa-circle-o text-aqua"></i> <span>Merchant Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if($navigation == 'merchants') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('merchants'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Merchants</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'merchants_commision') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('merchants/commission'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Set Merchant Commission</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'merchant_earned_commissions') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('merchant-earned-commissions'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Merchant Earned Commissions</span>
+                </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="treeview <?php if($navigation == 'code_generator' || $navigation == 'service-coupons') { ?>active<?php } ?>">
+          <a href="#">
+              <i class="fa fa-circle-o text-aqua"></i> <span>Coupons Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if($navigation == 'code_generator') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('code_generator/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Product Coupons</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'service-coupons') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('service-coupons/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Service Coupons</span>
+                </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="treeview <?php if($navigation == 'code_generator' || $navigation == 'service-coupons') { ?>active<?php } ?>">
+          <a href="#">
+              <i class="fa fa-circle-o text-aqua"></i> <span>Services Management</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="<?php if($navigation == 'field_req') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('field-visit-request'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Field Visit Requests</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'soil-health-test') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('soil-health-test/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Soil Health Test</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'plantix') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('plantix/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Plantix</span>
+                </a>
+            </li>
+            <li class="<?php if($navigation == 'plantix-subscription-plans') { ?>active<?php } ?>">
+                <a href="<?php echo base_url('plantix-subscription-plans/'); ?>">
+                    <i class="fa fa-circle-o text-aqua"></i> <span>Plantix Subscription Plans</span>
+                </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- <li class="<?php if($navigation == 'sellproduces') { ?>active<?php } ?>">
           <a href="<?php echo base_url('sellproduces-list'); ?>">
             <i class="fa fa-circle-o text-aqua"></i> <span>Sell Produce List</span>            
           </a>          
-        </li>
-        <li class="<?php if($navigation == 'push') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('push-notification'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Push Notification Management</span>
-              </a>
-          </li>
+        </li> -->
 
-          <li class="<?php if($navigation == 'communities') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('communities-list'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Community List</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'referrals') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('referrals'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Referrals</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'field_req') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('field-visit-request'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Field Visit Request</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'merchants') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('merchants'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Merchants</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'merchants_commision') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('merchants/commission'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Merchants Commission</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'merchant_earned_commissions') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('merchant-earned-commissions'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Merchant Earned Commissions</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'code_generator') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('code_generator/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Coupon Code Generator</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'kawa_api_logs') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('kawa_api_log/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Kawa API Logs</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'schedule-push-notification') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('schedule-push-notification/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Schedule Push Notification</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'soil-health-test') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('soil-health-test/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Soil Health Test</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'plantix') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('plantix/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Plantix</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'plantix-subscription-plans') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('plantix-subscription-plans/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Plantix Subscription Plans</span>
-              </a>
-          </li>
-
-          <li class="<?php if($navigation == 'service-coupons') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('service-coupons/'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Service Coupons</span>
-              </a>
-          </li>
+        <!-- <li class="<?php if($navigation == 'kawa_api_logs') { ?>active<?php } ?>">
+            <a href="<?php echo base_url('kawa_api_log/'); ?>">
+                <i class="fa fa-circle-o text-aqua"></i> <span>Kawa API Logs</span>
+            </a>
+        </li> -->
 
           <!-- <li class="<?php if($navigation == 'comment') { ?>active<?php } ?>">
           <a href="<?php echo base_url('review-list'); ?>">
@@ -393,12 +414,6 @@ if(!isset($sub_navigation))
                   <li class="<?php if($navigation == 'meta' && $sub_navigation == 'meta-add') { ?>active<?php } ?>"><a href="<?php echo base_url();?>meta-add"><i class="fa fa-circle-o"></i> Add New Meta Data</a></li>
               </ul>
 
-          </li> -->
-
-          <!-- <li class="<?php if($navigation == 'push') { ?>active<?php } ?>">
-              <a href="<?php echo base_url('push-notification'); ?>">
-                  <i class="fa fa-circle-o text-aqua"></i> <span>Push Notification Management</span>
-              </a>
           </li> -->
 
       </ul>
